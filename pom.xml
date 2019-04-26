@@ -29,6 +29,11 @@
       <name>Justin Harringa</name>
       <email>jharringa@salesforce.com</email>
     </developer>
+    <developer>
+      <id>afalko</id> <!-- TODO: Get right value for this -->
+      <name>Andrey Falko</name>
+      <email>afalko@gmail.com</email>
+    </developer>
   </developers>
   <scm>
     <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
