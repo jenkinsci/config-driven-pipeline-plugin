@@ -1,14 +1,11 @@
 def config = readYaml text: "${env.PIPELINE_CONFIG}"
-config.each { key, value ->
-  env[key] = value
-}
 pipeline {
   agent any
   stages {
     stage("run run.sh") {
       steps {
-        echo "Script to run: ${env.script_to_run}"
-        sh "./${env.script_to_run}"
+        echo "Script to run: ${config.script_to_run}"
+        sh "./${config.script_to_run}"
       }
     }
   }
