@@ -1,0 +1,14 @@
+def config = readYaml text: "${env.PIPELINE_CONFIG}"
+pipeline {
+  agent {
+    label "${config.agent_label}"
+  }
+  stages {
+    stage("run run ANYTHING") {
+      steps {
+        echo "What to run: ${config.run_me}"
+        sh "${config.run_me}"
+      }
+    }
+  }
+}
