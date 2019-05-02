@@ -10,7 +10,7 @@
     <relativePath />
   </parent>
   <artifactId>config-driven-pipeline</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <packaging>hpi</packaging>
 
   <name>Config-Driven Pipeline Plugin</name>
@@ -39,7 +39,7 @@
     <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
     <url>http://github.com/jenkinsci/${project.artifactId}-plugin</url>
-    <tag>HEAD</tag>
+    <tag>config-driven-pipeline-1.1</tag>
   </scm>
   <properties>
     <annotation-indexer.version>1.12</annotation-indexer.version>
