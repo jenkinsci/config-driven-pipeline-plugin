@@ -36,6 +36,17 @@ templates.
 The plugin places the contents of the config file in the `PIPELINE_CONFIG` environment variable so
 that you don't have to read the file again.
 
+## Why would I use this when I can use ${OTHER_SOLUTION}?
+### Shared Libraries
+[Shared libraries](https://jenkins.io/doc/book/pipeline/shared-libraries/) are fantastic and
+are a great way to be able to make your pipeline code testable. However, it was nice to compose
+overall stages declaratively in Jenkinsfile and simply let each repo pass in configurable values
+such as the unit test command, Docker container to run under, etc...
+
+### Buildpacks
+[Buildpacks](https://buildpacks.io/) are also awesome! However, sometimes there aren't quite the
+right buildpacks for your needs (and you could also use them within this :smile:).
+
 ## Upcoming Additions To This Repo
 * Example project configured via [Job DSL Plugin](https://plugins.jenkins.io/job-dsl)
 * More configuration information
