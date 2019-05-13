@@ -10,6 +10,15 @@ of trusted `Jenkinsfile` templates which are inherently visible, can be contribu
 also allow us the ability to centrally roll out updates and improvements to hundreds of
 pipelines at a time. 
 
+This plugin will select a Jenkinsfile based on config in the repository. What this means is 
+that you can configure a whole GitHub Organization to use a Jenkinsfile repository and 
+different repos can run different Jenkinsfiles in the central Jenkinsfile repo based on 
+versioned configuration in the repo (no messing around with job configuration and it's all 
+under version control). You simply point your 
+[pipeline_template](https://github.com/jenkinsci/config-driven-pipeline-plugin#pipeline_template) 
+to the path in the repo. This means you can switch between templates for different branches 
+and test out new templates in PRs without having to muck around with job config.
+
 ## Setup
 This plugin provides you with a new Project Recognizer that you can use with any 
 [Multibranch Pipeline type](https://jenkins.io/doc/book/pipeline/multibranch/#creating-a-multibranch-pipeline)
