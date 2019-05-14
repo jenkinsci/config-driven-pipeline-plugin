@@ -1,4 +1,6 @@
 # Config-Driven Pipeline Plugin
+[![License](https://img.shields.io/github/license/jenkinsci/config-driven-pipeline-plugin.svg)](LICENSE)
+[![wiki](https://img.shields.io/badge/Config--Driven%20Pipeline%20Plugin-WIKI-blue.svg?style=flat)](https://plugins.jenkins.io/config-driven-pipeline)
 
 ## Purpose
 Would you like to share `Jenkinsfile` without copy-pasting in git (or other SCMs) but
