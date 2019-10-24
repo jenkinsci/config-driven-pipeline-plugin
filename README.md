@@ -1,6 +1,8 @@
 # Config-Driven Pipeline Plugin
 [![License](https://img.shields.io/github/license/jenkinsci/config-driven-pipeline-plugin.svg)](LICENSE)
-[![wiki](https://img.shields.io/badge/Config--Driven%20Pipeline%20Plugin-WIKI-blue.svg?style=flat)](https://plugins.jenkins.io/config-driven-pipeline)
+[![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/config-driven-pipeline.svg)](https://plugins.jenkins.io/config-driven-pipeline)
+[![GitHub release](https://img.shields.io/github/release/jenkinsci/config-driven-pipeline-plugin.svg?label=changelog)](https://github.com/jenkinsci/config-driven-pipeline-plugin/releases/latest)
+[![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/config-driven-pipeline.svg?color=blue)](https://plugins.jenkins.io/config-driven-pipeline)
 
 ## Purpose
 Would you like to share `Jenkinsfile` without copy-pasting in git (or other SCMs) but
