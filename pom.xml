@@ -57,7 +57,7 @@
     <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
     <pipeline-utility-steps-test.version>2.0</pipeline-utility-steps-test.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <scm-api.version>2.3.0</scm-api.version>
+    <scm-api.version>2.6.3</scm-api.version>
     <snakeyaml.version>1.18</snakeyaml.version>
     <spock.version>1.1-groovy-2.4-rc-3</spock.version>
     <surefire-testng.version>2.18.1</surefire-testng.version>
