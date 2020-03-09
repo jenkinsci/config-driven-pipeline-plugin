@@ -67,7 +67,7 @@
     <workflow-multibranch.version>2.17</workflow-multibranch.version>
     <workflow-scm-step.version>2.6</workflow-scm-step.version>
     <workflow-step-api.version>2.14</workflow-step-api.version>
-    <workflow-support.version>2.17</workflow-support.version>
+    <workflow-support.version>3.4</workflow-support.version>
   </properties>
   <dependencies>
     <dependency>
