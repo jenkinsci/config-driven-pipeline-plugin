@@ -59,7 +59,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <scm-api.version>2.3.0</scm-api.version>
     <snakeyaml.version>1.18</snakeyaml.version>
-    <spock.version>1.1-groovy-2.4-rc-3</spock.version>
+    <spock.version>2.0-M3-groovy-3.0</spock.version>
     <surefire-testng.version>2.18.1</surefire-testng.version>
     <workflow-api.version>2.27</workflow-api.version>
     <workflow-cps.version>2.53</workflow-cps.version>
