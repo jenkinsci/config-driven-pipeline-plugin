@@ -30,14 +30,21 @@ public class ConfigurationValueFinder {
         if (indexOfKey == -1) {
             return null;
         }
-        int indexAfterKey = keyToFind.length() + indexOfKey;
-        int firstNewLine = configurationContents.indexOf("\n", indexAfterKey);
-        String delimiterAndValueString = configurationContents.substring(indexAfterKey, firstNewLine);
-        String valueWithoutDelimitersQuotesAndTicks = removeDelimitersQuotesAndTicks(delimiterAndValueString);
+        String delimiterAndValue = getDelimiterAndValue(configurationContents, keyToFind, indexOfKey);
+        String valueWithoutDelimitersQuotesAndTicks = removeDelimitersQuotesAndTicks(delimiterAndValue);
         if (valueWithoutDelimitersQuotesAndTicks == null) {
             return null;
         }
         return valueWithoutDelimitersQuotesAndTicks.trim();
+    }
+
+    private static String getDelimiterAndValue(String configurationContents, String keyToFind, int indexOfKey) {
+        int indexAfterKey = keyToFind.length() + indexOfKey;
+        int firstNewLine = configurationContents.indexOf("\n", indexAfterKey);
+        if (firstNewLine == -1) {
+            return configurationContents.substring(indexAfterKey);
+        }
+        return configurationContents.substring(indexAfterKey, firstNewLine);
     }
 
     /**
