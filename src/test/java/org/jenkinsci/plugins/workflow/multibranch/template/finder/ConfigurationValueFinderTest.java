@@ -1,8 +1,6 @@
 package org.jenkinsci.plugins.workflow.multibranch.template.finder;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,10 +34,23 @@ class ConfigurationValueFinderTest {
     }
 
     @Test
+    void findFirstKeyWithNoNewLine() {
+        assertEquals("hi",
+                find("nonewline:hi", "nonewline"));
+    }
+
+    @Test
     void foundFirstKey() {
         assertEquals("hi",
                 find("bare:hi\n test1:second\n test1:third",
                         "bare"));
+    }
+
+    @Test
+    void foundLastKey() {
+        assertEquals("third",
+                find("bare:hi\n test1:second\n last:third",
+                        "last"));
     }
 
     @Test
@@ -71,9 +82,23 @@ class ConfigurationValueFinderTest {
     }
 
     @Test
+    void foundLastKeyWithEquals() {
+        assertEquals("third",
+                find("equals=\"hi\"\ntest1=second\nlast=third",
+                        "last"));
+    }
+
+    @Test
     void foundKeyWithSpacesAroundEquals() {
         assertEquals("hi",
                 find("equals_space = \"hi\"\ntest1 = second\ntest2 = third",
                         "equals_space"));
+    }
+
+    @Test
+    void foundLastKeyWithSpacesAroundEquals() {
+        assertEquals("third",
+                find("equals_space = \"hi\"\ntest1 = second\nlast = third",
+                        "last"));
     }
 }
