@@ -44,7 +44,7 @@
   <properties>
     <annotation-indexer.version>1.12</annotation-indexer.version>
     <branch-api.version>2.0.21</branch-api.version>
-    <git-plugin.version>3.9.1</git-plugin.version>
+    <git-plugin.version>4.4.3</git-plugin.version>
     <github-branch-source.version>2.4.1</github-branch-source.version>
     <groovy.eclipse.batch.version>2.4.3-01</groovy.eclipse.batch.version>
     <groovy.eclipse.compiler.version>2.9.2-01</groovy.eclipse.compiler.version>
