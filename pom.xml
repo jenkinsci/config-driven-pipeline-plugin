@@ -47,7 +47,7 @@
     <git-plugin.version>3.9.1</git-plugin.version>
     <github-branch-source.version>2.4.1</github-branch-source.version>
     <groovy.eclipse.batch.version>2.4.3-01</groovy.eclipse.batch.version>
-    <groovy.eclipse.compiler.version>2.9.2-01</groovy.eclipse.compiler.version>
+    <groovy.eclipse.compiler.version>3.6.0-03</groovy.eclipse.compiler.version>
     <groovy.version>2.4.19</groovy.version>
     <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
     <java.level>8</java.level>
