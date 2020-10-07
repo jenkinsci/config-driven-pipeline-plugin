@@ -24,6 +24,7 @@
 
 package org.jenkinsci.plugins.workflow.multibranch.template;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.AbortException;
 import hudson.Extension;
 import hudson.FilePath;
@@ -78,6 +79,8 @@ class ConfigFileSCMBinder extends FlowDefinition {
 
     public static final String INAPPROPRIATE_CONTEXT = "inappropriate context";
 
+    @SuppressFBWarnings(value = "RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE",
+            justification = "SCMFileSystem.of can return a null but spotbugs does not understand")
     @Override public FlowExecution create(FlowExecutionOwner handle, TaskListener listener, List<? extends Action> actions) throws Exception {
         Queue.Executable exec = handle.getExecutable();
         if (!(exec instanceof WorkflowRun)) {

@@ -1,10 +1,16 @@
 package org.jenkinsci.plugins.workflow.multibranch.template.finder;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ConfigurationValueFinderTest {
+
+    public static final String EXPECTED_RESULT = "expectedResult";
 
     /**
      * Simple helper method to call ConfigurationValueFinder.findFirstConfigurationValue
@@ -18,87 +24,39 @@ class ConfigurationValueFinderTest {
         return ConfigurationValueFinder.findFirstConfigurationValue(configurationContents, keyToFind);
     }
 
-    @Test
-    void findNullKeyOutOfConfigReturnsNull() {
-        assertNull(find("test", null));
+    private static Stream<Arguments> keyNotFoundProvider() {
+        return Stream.of(
+                Arguments.of("null key",        null,      "test"),
+                Arguments.of("null config",     "someKey", null),
+                Arguments.of("key not found",   "someKey", "keynotfound")
+        );
     }
 
-    @Test
-    void findStringKeyOutOfNullConfigReturnsNull() {
-        assertNull(find(null, "test1"));
+    @ParameterizedTest
+    @MethodSource("keyNotFoundProvider")
+    void cannotFindKey(String testCase, String keyToFind, String configurationContents) {
+        assertNull(find(configurationContents, keyToFind), "Should not have found value for " + testCase);
     }
 
-    @Test
-    void cannotFindKeyReturnsNull() {
-        assertNull(find("keynotfound", "test1"));
+
+    private static Stream<Arguments> keysFoundProvider() {
+        return Stream.of(
+                Arguments.of("noNewLine",                   "noNewLine:" + EXPECTED_RESULT),
+                Arguments.of("firstKey",                    "firstKey:" + EXPECTED_RESULT + "\n test1:second\n test1:third"),
+                Arguments.of("lastKey",                     "bare:hi\n test1:second\n lastKey:" + EXPECTED_RESULT),
+                Arguments.of("keyWithQuotesAround",         "\"keyWithQuotesAround\":\"" + EXPECTED_RESULT + "\"\n test1:second\n test1:third"),
+                Arguments.of("keyWithTicksAround",          "'keyWithTicksAround':'" + EXPECTED_RESULT + "'\n test1:second\n test1:third"),
+                Arguments.of("keyWithTicksSpaces",          "'keyWithTicksSpaces' :          '" + EXPECTED_RESULT + "'        \n test1:second\n test1:third"),
+                Arguments.of("keyWithEqualsDelim",          "keyWithEqualsDelim=\"" + EXPECTED_RESULT + "\"\ntest1=second\ntest2=third"),
+                Arguments.of("lastKeyWithEqualsDelim",      "equals=\"hi\"\ntest1=second\nlastKeyWithEqualsDelim=" + EXPECTED_RESULT),
+                Arguments.of("keyWithSpaceAroundEquals",    "keyWithSpaceAroundEquals = \"" + EXPECTED_RESULT + "\"\ntest1 = second\ntest2 = third"),
+                Arguments.of("lastKeyWithSpaceyEquals",     "equals_space = \"hi\"\ntest1 = second\nlastKeyWithSpaceyEquals = " + EXPECTED_RESULT)
+                );
     }
 
-    @Test
-    void findFirstKeyWithNoNewLine() {
-        assertEquals("hi",
-                find("nonewline:hi", "nonewline"));
-    }
-
-    @Test
-    void foundFirstKey() {
-        assertEquals("hi",
-                find("bare:hi\n test1:second\n test1:third",
-                        "bare"));
-    }
-
-    @Test
-    void foundLastKey() {
-        assertEquals("third",
-                find("bare:hi\n test1:second\n last:third",
-                        "last"));
-    }
-
-    @Test
-    void foundKeyWithQuotesAroundKey() {
-        assertEquals("hi",
-                find("\"quotes\":\"hi\"\n test1:second\n test1:third",
-                        "quotes"));
-    }
-
-    @Test
-    void foundKeyWithTicksAroundKey() {
-        assertEquals("hi",
-                find("'ticks':'hi'\n test1:second\n test1:third",
-                        "ticks"));
-    }
-
-    @Test
-    void foundKeyWithTicksAroundKeyAndManySpaces() {
-        assertEquals("hi",
-                find("'spaces' :          'hi'        \n test1:second\n test1:third",
-                        "spaces"));
-    }
-
-    @Test
-    void foundKeyWithEquals() {
-        assertEquals("hi",
-                find("equals=\"hi\"\ntest1=second\ntest2=third",
-                        "equals"));
-    }
-
-    @Test
-    void foundLastKeyWithEquals() {
-        assertEquals("third",
-                find("equals=\"hi\"\ntest1=second\nlast=third",
-                        "last"));
-    }
-
-    @Test
-    void foundKeyWithSpacesAroundEquals() {
-        assertEquals("hi",
-                find("equals_space = \"hi\"\ntest1 = second\ntest2 = third",
-                        "equals_space"));
-    }
-
-    @Test
-    void foundLastKeyWithSpacesAroundEquals() {
-        assertEquals("third",
-                find("equals_space = \"hi\"\ntest1 = second\nlast = third",
-                        "last"));
+    @ParameterizedTest
+    @MethodSource("keysFoundProvider")
+    void findKey(String keyToFind, String configurationContents) {
+        assertEquals(EXPECTED_RESULT, find(configurationContents, keyToFind), "Did not find expected value for " + keyToFind);
     }
 }
