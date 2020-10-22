@@ -43,7 +43,7 @@
   </scm>
   <properties>
     <annotation-indexer.version>1.12</annotation-indexer.version>
-    <github-branch-source.version>2.4.1</github-branch-source.version>
+    <github-branch-source.version>2.9.1</github-branch-source.version>
     <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
     <java.level>8</java.level>
     <java.version>1.8</java.version>
