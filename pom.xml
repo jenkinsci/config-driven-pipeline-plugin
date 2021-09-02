@@ -50,7 +50,7 @@
     <jenkins.version>2.222.4</jenkins.version>
     <junit.version>4.13.2</junit.version>
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-    <pipeline-utility-steps-test.version>2.6.1</pipeline-utility-steps-test.version>
+    <pipeline-utility-steps-test.version>2.10.0</pipeline-utility-steps-test.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <workflow-multibranch.version>2.17</workflow-multibranch.version>
     <workflow-scm-step.version>2.6</workflow-scm-step.version>
