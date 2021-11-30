@@ -52,7 +52,7 @@
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     <pipeline-utility-steps-test.version>2.6.1</pipeline-utility-steps-test.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <workflow-multibranch.version>2.17</workflow-multibranch.version>
+    <workflow-multibranch.version>2.26</workflow-multibranch.version>
     <workflow-scm-step.version>2.6</workflow-scm-step.version>
     <junit-jupiter.version>5.8.2</junit-jupiter.version>
   </properties>
