@@ -21,14 +21,19 @@ import java.util.Collection;
 public class ConfigDrivenWorkflowBranchProjectFactory extends AbstractWorkflowBranchProjectFactory {
     // TODO: Make this a parameter that users can adjust to their liking
     public static final String USER_DEFINITION_PATH = ".yourconfig.yml";
+    public static final String USER_DEFINITION_PIPELINE_PATH = "Jenkinsfile";
     public static final String PIPELINE_TEMPLATE = "pipeline_template";
 
     private String scriptPath = USER_DEFINITION_PATH;
+    private String pipelinePath = USER_DEFINITION_PIPELINE_PATH;
     private SCM jenkinsFileScm = null;
 
     public Object readResolve() {
         if (this.scriptPath == null) {
             this.scriptPath = USER_DEFINITION_PATH;
+        }
+        if (this.pipelinePath == null) {
+            this.pipelinePath = USER_DEFINITION_PIPELINE_PATH;
         }
         return this;
     }
@@ -42,8 +47,18 @@ public class ConfigDrivenWorkflowBranchProjectFactory extends AbstractWorkflowBr
         }
     }
 
+    @DataBoundSetter
+    public void setPipelinePath(String pipelinePath) {
+        if (StringUtils.isEmpty(pipelinePath)) {
+            this.pipelinePath = USER_DEFINITION_PIPELINE_PATH;
+        } else {
+            this.pipelinePath = pipelinePath;
+        }
+    }
+
     public String getScriptPath() { return scriptPath; }
 
+    public String getPipelinePath() { return pipelinePath; }
 
     public SCM getJenkinsFileScm() {
         return jenkinsFileScm;
@@ -60,7 +75,7 @@ public class ConfigDrivenWorkflowBranchProjectFactory extends AbstractWorkflowBr
     @Override protected FlowDefinition createDefinition() {
         // This creates the CpsScmFlowDefinition... create a new type of "binder"???
         // We need a non-hardcoded version of this class... it does almost everything we want already...
-        return new ConfigFileSCMBinder(scriptPath, jenkinsFileScm);
+        return new ConfigFileSCMBinder(scriptPath, pipelinePath, jenkinsFileScm);
     }
 
     @Override protected SCMSourceCriteria getSCMSourceCriteria(SCMSource source) {

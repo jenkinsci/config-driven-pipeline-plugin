@@ -29,5 +29,9 @@ THE SOFTWARE.
     <f:entry title="${%Config File Path}" field="scriptPath">
         <f:textbox default=".yourconfig.yml"/>
     </f:entry>
+    <f:entry title="${%Pipeline Template Path}" field="pipelinePath">
+        <f:textbox default="Jenkinsfile"/>
+    </f:entry>
+
     <f:dropdownDescriptorSelector field="jenkinsFileScm" title="Centralized Jenkinsfile SCM" descriptors="${descriptor.applicableDescriptors}"/>
 </j:jelly>
