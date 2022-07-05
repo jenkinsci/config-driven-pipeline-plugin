@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.Collection;
 
 import static org.jenkinsci.plugins.workflow.multibranch.template.ConfigDrivenWorkflowBranchProjectFactory.USER_DEFINITION_PATH;
+import static org.jenkinsci.plugins.workflow.multibranch.template.ConfigDrivenWorkflowBranchProjectFactory.USER_DEFINITION_PIPELINE_PATH;
+
 
 /**
  * Defines organization folders by {@link WorkflowBranchProjectFactory}.
@@ -25,11 +27,16 @@ import static org.jenkinsci.plugins.workflow.multibranch.template.ConfigDrivenWo
 public class ConfigDrivenWorkflowMultiBranchProjectFactory extends AbstractWorkflowMultiBranchProjectFactory {
 
     private String scriptPath = USER_DEFINITION_PATH;
+    private String pipelinePath = USER_DEFINITION_PIPELINE_PATH;
+
     private SCM jenkinsFileScm = null;
 
     public Object readResolve() {
         if (this.scriptPath == null) {
             this.scriptPath = USER_DEFINITION_PATH;
+        }
+        if (this.pipelinePath == null) {
+            this.pipelinePath = USER_DEFINITION_PIPELINE_PATH;
         }
         return this;
     }
@@ -43,8 +50,18 @@ public class ConfigDrivenWorkflowMultiBranchProjectFactory extends AbstractWorkf
         }
     }
 
+    @DataBoundSetter
+    public void setpipelinePath(String pipelinePath) {
+        if (StringUtils.isEmpty(pipelinePath)) {
+            this.pipelinePath = USER_DEFINITION_PIPELINE_PATH;
+        } else {
+            this.pipelinePath = pipelinePath;
+        }
+    }
+
     public String getScriptPath() { return scriptPath; }
 
+    public String getPipelinePath() { return pipelinePath; }
 
     public SCM getJenkinsFileScm() {
         return jenkinsFileScm;
@@ -65,6 +82,7 @@ public class ConfigDrivenWorkflowMultiBranchProjectFactory extends AbstractWorkf
     private ConfigDrivenWorkflowBranchProjectFactory newProjectFactory() {
         ConfigDrivenWorkflowBranchProjectFactory workflowBranchProjectFactory = new ConfigDrivenWorkflowBranchProjectFactory();
         workflowBranchProjectFactory.setScriptPath(scriptPath);
+        workflowBranchProjectFactory.setPipelinePath(pipelinePath);
         workflowBranchProjectFactory.setJenkinsFileScm(jenkinsFileScm);
         return workflowBranchProjectFactory;
     }

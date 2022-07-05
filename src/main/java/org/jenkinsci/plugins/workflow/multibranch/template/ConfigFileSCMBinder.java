@@ -56,6 +56,7 @@ import java.util.List;
 
 import static org.jenkinsci.plugins.workflow.multibranch.template.ConfigDrivenWorkflowBranchProjectFactory.PIPELINE_TEMPLATE;
 import static org.jenkinsci.plugins.workflow.multibranch.template.ConfigDrivenWorkflowBranchProjectFactory.USER_DEFINITION_PATH;
+import static org.jenkinsci.plugins.workflow.multibranch.template.ConfigDrivenWorkflowBranchProjectFactory.USER_DEFINITION_PIPELINE_PATH;
 
 /**
  * Checks out the desired version of {@link ConfigDrivenWorkflowBranchProjectFactory#USER_DEFINITION_PATH}.
@@ -63,17 +64,22 @@ import static org.jenkinsci.plugins.workflow.multibranch.template.ConfigDrivenWo
 class ConfigFileSCMBinder extends FlowDefinition {
 
     private String scriptPath;
+    private String pipelinePath;
     private SCM jenkinsFileScm;
 
     public Object readResolve() {
         if (this.scriptPath == null) {
             this.scriptPath = USER_DEFINITION_PATH;
         }
+        if (this.pipelinePath == null) {
+            this.pipelinePath = USER_DEFINITION_PIPELINE_PATH;
+        }
         return this;
     }
 
-    @DataBoundConstructor public ConfigFileSCMBinder(String scriptPath, SCM jenkinsFileScm) {
+    @DataBoundConstructor public ConfigFileSCMBinder(String scriptPath, String pipelinePath, SCM jenkinsFileScm) {
         this.scriptPath = scriptPath;
+        this.pipelinePath = pipelinePath;
         this.jenkinsFileScm = jenkinsFileScm;
     }
 
@@ -163,27 +169,30 @@ class ConfigFileSCMBinder extends FlowDefinition {
                     }
                 }
             }
+
+            String jenkinsfilePathString;
+
             if (configContents == null) {
-                String pipelineTemplateNotFound =
-                        String.format("Could not find a value for %s in %s", PIPELINE_TEMPLATE, scriptPath);
-                throw new AbortException(pipelineTemplateNotFound);
+                jenkinsfilePathString = pipelinePath;
             } else {
-                String jenkinsfilePathString =
+                jenkinsfilePathString =
                         ConfigurationValueFinder.findFirstConfigurationValue(configContents,
-                                ConfigDrivenWorkflowBranchProjectFactory.PIPELINE_TEMPLATE);
-
-                build.addAction(new ConfigFileEnvironmentContributingAction(configContents));
-
-                try (SCMFileSystem scriptFileSystem = SCMFileSystem.of(job, jenkinsFileScm)) {
-                    if (scriptFileSystem != null) {
-                        script = scriptFileSystem.child(jenkinsfilePathString).contentAsString();
-                        listener.getLogger().println("Obtained " + jenkinsfilePathString);
-
-                    }
-
-                } catch (FileNotFoundException exception) {
-                    throw new AbortException(String.format("Could not find file %s", jenkinsfilePathString));
+                            ConfigDrivenWorkflowBranchProjectFactory.PIPELINE_TEMPLATE);
+                if(jenkinsfilePathString == null) {
+                    jenkinsfilePathString = pipelinePath;
                 }
+            }
+            build.addAction(new ConfigFileEnvironmentContributingAction(configContents));
+
+            try (SCMFileSystem scriptFileSystem = SCMFileSystem.of(job, jenkinsFileScm)) {
+                if (scriptFileSystem != null) {
+                    script = scriptFileSystem.child(jenkinsfilePathString).contentAsString();
+                    listener.getLogger().println("Obtained " + jenkinsfilePathString);
+
+                }
+
+            } catch (FileNotFoundException exception) {
+                throw new AbortException(String.format("Could not find file %s", jenkinsfilePathString));
             }
 
             if (script != null) {
